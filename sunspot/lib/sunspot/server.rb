@@ -50,6 +50,7 @@ module Sunspot
         File.open(pid_path, 'w') do |file|
           file << pid
         end
+        exit 0
       end
     end
 
