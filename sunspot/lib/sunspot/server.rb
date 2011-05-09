@@ -38,19 +38,17 @@ module Sunspot
           FileUtils.rm(pid_path)
         end
       end
-      fork do
-        pid = fork do
-          Process.setsid
-          STDIN.reopen('/dev/null')
-          STDOUT.reopen('/dev/null', 'a')
-          STDERR.reopen(STDOUT)
-          run
-        end
-        FileUtils.mkdir_p(pid_dir)
-        File.open(pid_path, 'w') do |file|
-          file << pid
-        end
-        exit 0
+
+      pid = fork do
+        Process.setsid
+        STDIN.reopen('/dev/null')
+        STDOUT.reopen('/dev/null', 'a')
+        STDERR.reopen(STDOUT)
+        run
+      end
+      FileUtils.mkdir_p(pid_dir)
+      File.open(pid_path, 'w') do |file|
+        file << pid
       end
     end
 
